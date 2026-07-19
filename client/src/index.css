@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { background: #FAF8F2; color: #20201B; }
+.hide-scroll::-webkit-scrollbar { display: none; }
+.hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+.hover-lift { transition: transform .18s ease, box-shadow .18s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(19,34,66,0.10); }
+.dashline { border-top: 1.5px dashed #E4DECE; }
