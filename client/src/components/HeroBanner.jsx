@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight, Truck } from "lucide-react";
 
 const SLIDES = [
-  { id: 1, eyebrow: "New season", title: "Layer up in kind", subtitle: "20% off outerwear across every brand", cta: "Shop fashion", category: "fashion", from: "#132242", to: "#1F345C" },
-  { id: 2, eyebrow: "Just landed", title: "Sound, reimagined", subtitle: "Latest audio tech, up to 30% off", cta: "Shop electronics", category: "electronics", from: "#1E4A40", to: "#2E6E60" },
-  { id: 3, eyebrow: "Home edit", title: "Slow living, fast delivery", subtitle: "Handpicked home goods from independent makers", cta: "Shop home", category: "home", from: "#9C7626", to: "#C69A3E" },
-  { id: 4, eyebrow: "Pantry refresh", title: "Good ingredients, good week", subtitle: "Fresh groceries delivered in under 2 hours", cta: "Shop groceries", category: "groceries", from: "#B2543A", to: "#8C4530" },
+  { id: 1, eyebrow: "New season", title: "Layer up in kind", subtitle: "20% off outerwear across every brand", cta: "Shop fashion", category: "fashion", from: "#132242", to: "#1F345C", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80" },
+  { id: 2, eyebrow: "Just landed", title: "Sound, reimagined", subtitle: "Latest audio tech, up to 30% off", cta: "Shop electronics", category: "electronics", from: "#1E4A40", to: "#2E6E60", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" },
+  { id: 3, eyebrow: "Home edit", title: "Slow living, fast delivery", subtitle: "Handpicked home goods from independent makers", cta: "Shop home", category: "home", from: "#9C7626", to: "#C69A3E", image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80" },
+  { id: 4, eyebrow: "Pantry refresh", title: "Good ingredients, good week", subtitle: "Fresh groceries delivered in under 2 hours", cta: "Shop groceries", category: "groceries", from: "#B2543A", to: "#8C4530", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" },
 ];
 
 export default function HeroBanner({ onShop }) {
@@ -25,6 +25,11 @@ export default function HeroBanner({ onShop }) {
         className="relative rounded-[20px] overflow-hidden h-[320px]"
         style={{ background: `linear-gradient(120deg, ${s.from}, ${s.to})` }}
       >
+        {s.image && (
+          <div key={`img-${slide}`} className="absolute top-6 right-16 bottom-16 w-[340px] hidden md:flex items-center justify-center overflow-hidden rounded-[16px] shadow-2xl border border-white/10 z-10">
+            <img src={s.image} alt={s.title} className="w-full h-full object-cover transform hover:scale-105 transition duration-700" />
+          </div>
+        )}
         <div key={slide} className="absolute inset-0 flex flex-col justify-center px-14 max-w-[520px]">
           <span className="font-mono text-[11.5px] tracking-widest uppercase text-[#E9CE96]">{s.eyebrow}</span>
           <h1 className="font-display text-[42px] font-semibold text-white my-2.5 leading-[1.08]">{s.title}</h1>

@@ -25,30 +25,25 @@ const BRANDS = [
 ];
 
 const PRODUCTS = [
-  ["Wool-blend overcoat", "fashion", "northfield", 8990, 12990, "NEW", "Shirt", "https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=600&auto=format&fit=crop"],
-  ["Everyday oxford shirt", "fashion", "marchetti", 2190, 2990, "TRENDING", "Shirt", "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=600&auto=format&fit=crop"],
-  ["Tailored linen trousers", "fashion", "northfield", 3290, 3990, null, "Shirt", "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=600&auto=format&fit=crop"],
-  ["Cropped denim jacket", "fashion", "marchetti", 4490, 5990, "NEW", "Shirt", "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=600&auto=format&fit=crop"],
-  ["Wireless ANC headphones", "electronics", "verve", 6990, 9990, "TRENDING", "Smartphone", "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"],
-  ["45W fast charging adapter", "electronics", "nimbus", 1290, 1690, null, "Smartphone", "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=600&auto=format&fit=crop"],
-  ["Smart fitness watch", "electronics", "verve", 5490, 7990, "NEW", "Smartphone", "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop"],
-  ["Portable bluetooth speaker", "electronics", "nimbus", 2990, 3990, "TRENDING", "Smartphone", "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop"],
-  ["Ceramic pour-over set", "home", "kessler", 1890, 2490, "NEW", "Home", "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=600&auto=format&fit=crop"],
-  ["Linen cushion covers (set of 2)", "home", "wren", 1290, 1690, null, "Home", "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop"],
-  ["Oak dining chair", "home", "kessler", 7490, 9990, null, "Home", "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=600&auto=format&fit=crop"],
-  ["Woven storage basket", "home", "wren", 990, 1290, "TRENDING", "Home", "https://images.unsplash.com/photo-1531835551805-16d864c8d311?q=80&w=600&auto=format&fit=crop"],
-  ["Cold-pressed argan oil", "beauty", "solstice", 890, 1090, "NEW", "Sparkles", "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=600&auto=format&fit=crop"],
-  ["Vitamin C serum", "beauty", "solstice", 1190, 1490, "TRENDING", "Sparkles", "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop"],
-  ["Matte lip set", "beauty", "solstice", 790, 990, null, "Sparkles", "https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=600&auto=format&fit=crop"],
-  ["Trail running shoes", "sports", "aarohi", 3990, 5490, "TRENDING", "Dumbbell", "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop"],
-  ["Foldable yoga mat", "sports", "aarohi", 1190, 1490, null, "Dumbbell", "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=600&auto=format&fit=crop"],
-  ["Insulated water bottle", "sports", "aarohi", 690, 890, "NEW", "Dumbbell", "https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop"],
-  ["Organic breakfast oats 1kg", "groceries", "cardinal", 290, 350, null, "Apple", "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?q=80&w=600&auto=format&fit=crop"],
-  ["Cold-pressed olive oil 1L", "groceries", "cardinal", 690, 850, "TRENDING", "Apple", "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=600&auto=format&fit=crop"],
-  ["Artisan sourdough loaf", "groceries", "cardinal", 190, 220, "NEW", "Apple", "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=600&auto=format&fit=crop"],
-  ["Wooden building blocks", "kids", "lumen", 1490, 1890, "NEW", "Baby", "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=500&auto=format&fit=crop&q=80"],
-  ["Storybook collection (5 books)", "kids", "lumen", 990, 1290, null, "Baby", "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop"],
-  ["Soft cotton romper", "kids", "lumen", 690, 890, "TRENDING", "Baby", "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=600&auto=format&fit=crop"],
+  ["Wool-blend overcoat", "fashion", "northfield", 8990, 12990, "NEW", "Shirt", "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=800&q=80"],
+  ["Ceramic pour-over set", "home", "kessler", 1890, 2490, "NEW", "Home", "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"],
+  ["Hydrating Botanical Serum", "beauty", "solstice", 1190, 1490, "NEW", "Sparkles", "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80"],
+  ["Wooden building blocks", "kids", "lumen", 1490, 1890, "NEW", "Baby", "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80"],
+  ["Portable bluetooth speaker", "electronics", "nimbus", 2990, 3990, "NEW", "Smartphone", "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80"],
+  ["Everyday oxford shirt", "fashion", "marchetti", 2190, 2990, "TRENDING", "Shirt", "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80"],
+  ["Wireless ANC headphones", "electronics", "verve", 6990, 8990, "TRENDING", "Smartphone", "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"],
+  ["Trail running shoes", "sports", "aarohi", 3990, 5490, "TRENDING", "Dumbbell", "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"],
+  ["Organic artisan sourdough", "groceries", "cardinal", 290, 360, "TRENDING", "Apple", "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"],
+  ["Classic Matte Sunglasses", "fashion", "solstice", 1490, 2290, "TRENDING", "Shirt", "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80"],
+  ["Minimalist Desk Lamp", "home", "wren", 2490, 3290, "NEW", "Home", "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"],
+  ["Smart Fitness Tracker", "electronics", "nimbus", 3490, 4490, "NEW", "Smartphone", "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=800&q=80"],
+  ["Italian Leather Cardholder", "fashion", "marchetti", 1290, 1790, "NEW", "Shirt", "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80"],
+  ["Double-Wall Glass Tumbler", "home", "kessler", 890, 1190, "NEW", "Home", "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80"],
+  ["Classic Matte Polarized Sunglasses", "fashion", "solstice", 1490, 2290, "NEW", "Shirt", "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80"],
+  ["Water-Resistant Commuter Backpack", "fashion", "northfield", 3290, 4500, "NEW", "Shirt", "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80"],
+  ["Minimalist Smartwatch Series 4", "electronics", "verve", 4990, 6990, "NEW", "Smartphone", "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"],
+  ["Ergonomic Mechanical Keyboard", "electronics", "aarohi", 4290, 5990, "NEW", "Smartphone", "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80"],
+  ["Handcrafted Leather Journal", "home", "marchetti", 990, 1490, "NEW", "Home", "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80"]
 ];
 
 function slugify(s) {
@@ -56,6 +51,7 @@ function slugify(s) {
 }
 
 async function main() {
+  await prisma.product.deleteMany({ where: { slug: "cold-pressed-argan-oil" } });
   const catMap = {};
   for (const c of CATEGORIES) {
     const cat = await prisma.category.upsert({

@@ -31,8 +31,9 @@ router.post("/signup", async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({ data: { name, email, passwordHash } });
+  const token = signToken(user.id);
   setSession(res, user.id);
-  res.status(201).json({ id: user.id, name: user.name, email: user.email });
+  res.status(201).json({ id: user.id, name: user.name, email: user.email, token });
 });
 
 // ---- Login (password) ----
@@ -44,8 +45,9 @@ router.post("/login", async (req, res) => {
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ error: "Invalid email or password." });
 
+  const token = signToken(user.id);
   setSession(res, user.id);
-  res.json({ id: user.id, name: user.name, email: user.email });
+  res.json({ id: user.id, name: user.name, email: user.email, token });
 });
 
 // ---- OTP login ----
@@ -75,8 +77,9 @@ router.post("/otp/verify", async (req, res) => {
   if (!user) {
     user = await prisma.user.create({ data: { name: "New user", phone } });
   }
+  const token = signToken(user.id);
   setSession(res, user.id);
-  res.json({ id: user.id, name: user.name, phone: user.phone });
+  res.json({ id: user.id, name: user.name, phone: user.phone, token });
 });
 
 // ---- Forgot / reset password ----

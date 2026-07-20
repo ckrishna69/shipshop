@@ -28,8 +28,8 @@ router.get("/products", async (req, res) => {
   if (tag) where.tag = tag;
   if (queryTerm) {
     where.OR = [
-      { name: { contains: queryTerm, mode: "insensitive" } },
-      { description: { contains: queryTerm, mode: "insensitive" } }
+      { name: { contains: queryTerm } },
+      { description: { contains: queryTerm } }
     ];
   }
 

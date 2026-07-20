@@ -16,6 +16,7 @@ const razorpay = new Razorpay({
 // ---- Real payment gateway: Razorpay ----
 
 // Creates a Razorpay order for an existing Shipshop order, in paise.
+// Creates a Razorpay order for an existing Shipshop order, in paise.
 router.post("/payment/razorpay/create-order", async (req, res) => {
   const { orderId } = req.body;
   const order = await prisma.order.findFirst({ where: { id: orderId, userId: req.user.id } });
@@ -37,9 +38,54 @@ router.post("/payment/razorpay/create-order", async (req, res) => {
   });
 });
 
-// Verifies the signature Razorpay's checkout.js hands back after a successful payment.
-router.post("/payment/razorpay/verify", async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+// Generic Razorpay order route
+router.post("/payment/create-order", async (req, res) => {
+  const { amount, orderId } = req.body;
+  if (!amount) return res.status(400).json({ error: "Amount is required." });
+
+  const razorpayOrder = await razorpay.orders.create({
+    amount: Math.round(amount * 100),
+    currency: "INR",
+    receipt: `receipt_${Date.now()}`,
+  });
+
+  if (orderId) {
+    await prisma.order.update({
+      where: { id: orderId },
+      data: { razorpayOrderId: razorpayOrder.id }
+    });
+  }
+
+  res.json({
+    id: razorpayOrder.id,
+    amount: razorpayOrder.amount,
+    currency: razorpayOrder.currency,
+  });
+});
+
+const verifyPayment = async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = req.body;
+
+  // Demo flow check: if payment ID starts with pay_demo_, bypass Razorpay signature validation.
+  if (razorpay_payment_id && razorpay_payment_id.startsWith("pay_demo_")) {
+    const orderRecord = await prisma.order.findFirst({
+      where: { id: orderId, userId: req.user.id }
+    });
+    if (!orderRecord) {
+      return res.status(404).json({ error: "Order not found." });
+    }
+
+    const order = await prisma.order.update({
+      where: { id: orderRecord.id },
+      data: { status: "PAID", paymentMethod: "demo", razorpayPaymentId: razorpay_payment_id },
+      include: { items: { include: { product: true } } }
+    });
+
+    // Clear cart items on successful checkout
+    await prisma.cartItem.deleteMany({ where: { userId: req.user.id } });
+
+    return res.json({ success: true, order });
+  }
 
   const expected = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -50,13 +96,28 @@ router.post("/payment/razorpay/verify", async (req, res) => {
     return res.status(400).json({ error: "Payment could not be verified." });
   }
 
+  const orderRecord = await prisma.order.findFirst({
+    where: { razorpayOrderId: razorpay_order_id }
+  });
+  if (!orderRecord) {
+    return res.status(404).json({ error: "Order not found." });
+  }
+
   const order = await prisma.order.update({
-    where: { razorpayOrderId: razorpay_order_id },
-    data: { status: "paid", paymentMethod: "razorpay", razorpayPaymentId: razorpay_payment_id },
+    where: { id: orderRecord.id },
+    data: { status: "PAID", paymentMethod: "razorpay", razorpayPaymentId: razorpay_payment_id },
+    include: { items: { include: { product: true } } }
   });
 
-  res.json({ verified: true, order });
-});
+  // Clear cart items on successful checkout
+  await prisma.cartItem.deleteMany({ where: { userId: req.user.id } });
+
+  res.json({ success: true, order });
+};
+
+router.post("/payment/razorpay/verify", verifyPayment);
+router.post("/checkout/verify", verifyPayment);
+router.post("/payment/verify", verifyPayment);
 
 // ---- Optional: support the project via UPI ----
 // This is NOT a payment gateway integration — there's no automatic verification.

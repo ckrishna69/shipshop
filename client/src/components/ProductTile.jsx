@@ -1,5 +1,6 @@
 import * as Icons from "lucide-react";
 import { Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useShop } from "../context/ShopContext.jsx";
 
 function money(n) {
@@ -7,15 +8,25 @@ function money(n) {
 }
 
 export default function ProductTile({ product }) {
-  const { addToCart, toggleWishlist, wishlist } = useShop();
+  const { addToCart, toggleWishlist, wishlist, cart } = useShop();
+  const navigate = useNavigate();
   const Icon = Icons[product.icon] || Icons.Package;
   const wished = wishlist.some((w) => w.productId === product.id);
+  const isInCart = cart.some((item) => item.productId === product.id || item.id === product.id);
 
   return (
-    <div className="hover-lift flex-shrink-0 w-[190px] bg-white border border-line rounded-2xl overflow-hidden">
+    <div className="hover-lift flex-shrink-0 w-full bg-white border border-line rounded-2xl overflow-hidden">
       <div className="relative w-full aspect-square overflow-hidden bg-gray-100 flex items-center justify-center">
         {product.image ? (
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            className="w-full h-full object-cover" 
+            onError={(e) => {
+              e.target.onerror = null; 
+              e.target.src = "https://images.unsplash.com/photo-1608248597261-83325863d646?auto=format&fit=crop&w=800&q=80";
+            }}
+          />
         ) : (
           <Icon size={44} strokeWidth={1.2} color="#1F345C" />
         )}
@@ -43,10 +54,21 @@ export default function ProductTile({ product }) {
           <span className="font-mono text-[11px] text-[#736D5E] line-through">{money(product.mrp)}</span>
         </div>
         <button
-          onClick={() => addToCart(product)}
-          className="w-full py-2 bg-ink text-white rounded-lg text-xs font-semibold"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isInCart) {
+              navigate("/cart");
+            } else {
+              addToCart(product);
+            }
+          }}
+          className={`w-full py-2 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+            isInCart 
+              ? "border-ink text-ink bg-transparent hover:bg-canvasalt" 
+              : "bg-ink text-white border-ink hover:bg-opacity-95"
+          }`}
         >
-          Add to cart
+          {isInCart ? "Go to cart" : "Add to cart"}
         </button>
       </div>
     </div>

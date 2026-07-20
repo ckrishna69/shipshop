@@ -77,7 +77,15 @@ export default function Wishlist() {
                       {/* Product Photo */}
                       <div className="w-full aspect-[3/4] bg-canvasalt flex items-center justify-center relative overflow-hidden">
                         {i.product.image ? (
-                          <img src={i.product.image} alt={i.product.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                          <img 
+                            src={i.product.image} 
+                            alt={i.product.name} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition duration-300" 
+                            onError={(e) => {
+                              e.target.onerror = null; 
+                              e.target.src = "https://images.unsplash.com/photo-1608248597261-83325863d646?auto=format&fit=crop&w=800&q=80";
+                            }}
+                          />
                         ) : (
                           <Icon size={44} color="#1F345C" strokeWidth={1.2} />
                         )}

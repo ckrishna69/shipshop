@@ -18,8 +18,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.14",
-    "razorpay": "^2.9.4",
     "qrcode": "^1.5.4",
+    "razorpay": "^2.9.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {

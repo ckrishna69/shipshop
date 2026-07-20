@@ -52,7 +52,7 @@ export default function Cart() {
           </div>
         ) : cart.length === 0 ? (
           <div className="bg-white rounded-2xl border border-line p-10 text-center max-w-[480px] mx-auto my-12 shadow-sm">
-            <div className="w-16 h-16 bg-[#fff3f6] rounded-full flex items-center justify-center mx-auto mb-5 text-[#ff3f6c]">
+            <div className="w-16 h-16 bg-canvasalt rounded-full flex items-center justify-center mx-auto mb-5 text-ink">
               <Icons.ShoppingBag size={28} />
             </div>
             <h2 className="font-display text-xl font-bold mb-3">Your shopping bag is empty</h2>
@@ -83,7 +83,15 @@ export default function Cart() {
                       {/* Product Image */}
                       <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-xl bg-canvasalt flex items-center justify-center flex-shrink-0 overflow-hidden border border-line self-center">
                         {i.product.image ? (
-                          <img src={i.product.image} alt={i.product.name} className="w-full h-full object-cover" />
+                          <img 
+                            src={i.product.image} 
+                            alt={i.product.name} 
+                            className="w-full h-full object-cover" 
+                            onError={(e) => {
+                              e.target.onerror = null; 
+                              e.target.src = "https://images.unsplash.com/photo-1608248597261-83325863d646?auto=format&fit=crop&w=800&q=80";
+                            }}
+                          />
                         ) : (
                           <Icon size={34} color="#1F345C" strokeWidth={1.2} />
                         )}
