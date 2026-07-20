@@ -14,14 +14,10 @@ import paymentRoutes from "./routes/payment.routes.js";
 const app = express();
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow non-browser requests, localhost, and any Vercel deployment
-    if (!origin || /^http:\/\/localhost:\d+$/.test(origin) || /\.vercel\.app$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: [
+    "https://shipshop-eight.vercel.app",
+    /^http:\/\/localhost:\d+$/
+  ],
   credentials: true
 }));
 
