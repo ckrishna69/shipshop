@@ -50,8 +50,13 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 // YOUR ROUTES START HERE
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
+// PUBLIC ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api", catalogRoutes);
+
+// PROTECTED / USER ATTACHED ROUTES
+app.use(attachUser);
+
 app.use("/api", cartRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", paymentRoutes);
