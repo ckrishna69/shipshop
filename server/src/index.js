@@ -1,7 +1,9 @@
 import "dotenv/config";
 import express from "express";
-import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";                       // <--- 1. IMPORT path
+import { fileURLToPath } from "url";           // <--- 2. IMPORT fileURLToPath
+
 import { attachUser } from "./middleware/auth.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -13,44 +15,39 @@ import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
-// --- REPLACE ONLY YOUR OLD CORS BLOCK WITH THIS ---
-const allowedOrigins = [
-  "https://shipshop-eight.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:3000"
-];
+// Helper variables to handle folder paths in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Replace your old app.use(cors(...)) and app.options(...) with this:
-
+// Dynamic CORS Header Middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  
   if (origin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
-  
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
 
-  // Instantly approve OPTIONS preflight requests
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
-
   next();
 });
 
-app.options("*", cors());
-
-app.options("*", cors());
-// --------------------------------------------------
-
-// Express middleware setup
+// Express parser middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(attachUser);
 
+// =========================================================
+// ADD THIS HERE (BEFORE YOUR ROUTES)
+// =========================================================
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/public", express.static(path.join(__dirname, "public")));
+// =========================================================
+
+// YOUR ROUTES START HERE
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 app.use("/api/auth", authRoutes);
