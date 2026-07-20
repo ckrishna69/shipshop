@@ -16,11 +16,13 @@ const app = express();
 app.use(cors({
   origin: [
     "https://shipshop-eight.vercel.app",
-    /^http:\/\/localhost:\d+$/
+    "http://localhost:5173",
+    "http://localhost:3000"
   ],
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
 // Express middleware setup
 app.use(express.json());
 app.use(cookieParser());
