@@ -20,12 +20,26 @@ const allowedOrigins = [
   "http://localhost:3000"
 ];
 
-app.use(cors({
-  origin: true, // Echoes back the origin automatically (works for all Vercel URLs & localhost)
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
-}));
+// Replace your old app.use(cors(...)) and app.options(...) with this:
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  if (origin) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+
+  // Instantly approve OPTIONS preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 app.options("*", cors());
 
