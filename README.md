@@ -1,151 +1,93 @@
-# Shipshop — Premium Full-Stack E-Commerce Platform
+# 🛍️ ShipShop — Premium Full-Stack E-Commerce Platform
 
-Shipshop is a modern, responsive, full-stack e-commerce web application built for a seamless user shopping experience. Designed with a clean aesthetic and responsive layout, the platform features a complete product catalog, full shopping cart and wishlist management, dual authentication mechanisms (traditional passwords and OTP-based login), and verified checkout integrations.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-blue?style=for-the-badge&logo=vercel)](https://shipshop-by5cn0qzu-ckrishnasingh69-2699s-projects.vercel.app)
+[![Backend Status](https://img.shields.io/badge/Backend-Render-green?style=for-the-badge&logo=render)](https://shipshop-1.onrender.com)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql)](https://shipshop-1.onrender.com)
 
-This project is prepared and optimized for a PBEL course submission.
+**ShipShop** is a modern, responsive, full-stack e-commerce web application designed to deliver a seamless shopping experience. Built with a decoupled architecture featuring a React SPA frontend and a RESTful Node.js backend, the platform supports real-time product browsing, user authentication with token persistence, persistent shopping cart/wishlist management, and checkout integrations.
+
+> **PBEL Project Submission Notice:**  
+> This project has been deployed to production and is fully accessible via the live demo link below.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Live Application Links
 
-The application is structured as a decoupled client-server architecture:
+* **Live Frontend Application (Vercel):** [https://shipshop-by5cn0qzu-ckrishnasingh69-2699s-projects.vercel.app](https://shipshop-by5cn0qzu-ckrishnasingh69-2699s-projects.vercel.app)
+* **Live Backend API Base (Render):** `https://shipshop-1.onrender.com/api`
 
-### 1. Frontend ([/client](file:///c:/Users/ckris/Downloads/shipshop-fullstack/shipshop/client))
-* **Core Library:** [React 18](https://react.dev/)
-* **Build Tool:** [Vite](https://vite.dev/) (ensuring lightning-fast HMR and build times)
-* **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [Lucide Icons](https://lucide.dev/) (custom UI components and responsive utilities)
-* **Routing:** [React Router DOM v6](https://reactrouter.com/) (declarative nested routes)
+---
 
-### 2. Backend ([/server](file:///c:/Users/ckris/Downloads/shipshop-fullstack/shipshop/server))
+## 🛠️ Tech Stack & Architecture
+
+ShipShop utilizes a decoupled Client-Server architecture with state-of-the-art web technologies:
+
+### 📱 Frontend (`/client`)
+* **Framework / Core Library:** [React 18](https://react.dev/)
+* **Build Tool:** [Vite](https://vite.dev/) (Optimized production bundles & lightning-fast HMR)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [Lucide Icons](https://lucide.dev/) (Modern, responsive UI components)
+* **Routing:** [React Router DOM v6](https://reactrouter.com/) (Declarative nested routing)
+* **HTTP Client:** Custom `fetch` / Axios client with automatic Bearer token interceptors
+* **Deployment:** Hosted on **Vercel**
+
+### ⚙️ Backend (`/server`)
 * **Runtime Environment:** [Node.js](https://nodejs.org/) (v18+)
-* **Framework:** [Express.js](https://expressjs.com/) (robust REST API endpoints)
-* **Database & ORM:** [Prisma ORM](https://www.prisma.io/) with a local [SQLite](https://www.sqlite.org/) database
-* **Authentication:** [JSON Web Tokens (JWT)](https://jwt.io/) stored securely in `httpOnly` cookies
+* **Server Framework:** [Express.js](https://expressjs.com/) (RESTful API architecture with `/api` prefixed routing)
+* **Database & ORM:** [Prisma ORM](https://www.prisma.io/) paired with a production **PostgreSQL** database (Local SQLite supported for dev)
+* **Authentication:** [JSON Web Tokens (JWT)](https://jwt.io/) stored in `localStorage` & attached via `Authorization: Bearer <token>` headers
+* **Security & Utilities:** `bcryptjs` password hashing, CORS configuration, and route guard middleware
+* **Deployment:** Hosted on **Render**
 
 ---
 
 ## 🌟 Key Features
 
-* **Dual Authentication Flows:**
-  * Standard signup and login with secure bcrypt-hashed passwords.
-  * Password-less OTP (One-Time Password) login (OTP is printed to the server console).
-  * Forgot/reset password email support (reset links print to console in development).
-* **Product Catalog:**
-  * Categories and Brands filtering mechanism.
-  * Badges for special products (e.g., `NEW`, `TRENDING`).
-* **Interactive Shopping Experience:**
-  * React Context-driven persistent shopping cart.
-  * Persistent wishlist and interactive cart adjustments.
-  * Address book manager with default address flags.
-* **Checkout & Payments System:**
-  * Full integration with [Razorpay API](https://razorpay.com/) (operating in test mode) for verified order signatures.
-  * Dynamic UPI "support this project" Tip Jar option with automatic client-side static QR code generation.
-* **Database Management:**
-  * Programmatic schema definitions and seed data featuring categories, brands, coupons, and mock products.
+* **Authentication & Session Persistence:**
+  * User registration and login with bcrypt password hashing.
+  * OTP-based authentication support (`verifyOtp`).
+  * JWT auth token saved in browser `localStorage` to ensure persistent user sessions across page reloads.
+  * Automatic token attachment on all protected requests (Cart, Wishlist, Profile).
 
----
+* **Product Catalog & Browsing:**
+  * Category and Brand filtering.
+  * Product badges (`NEW`, `TRENDING`).
+  * Real-time search and product detail views.
 
-## 📋 Prerequisites
+* **E-Commerce Operations:**
+  * Dynamic, context-driven persistent Shopping Cart (Add, Remove, Quantity adjustments).
+  * Wishlist management with instantaneous sync.
+  * Address Book manager for checkout preparation.
 
-Before running the project locally, ensure you have:
-* **Node.js** (v18.0.0 or higher) installed.
-* **npm** (v9.0.0 or higher) installed.
+* **Checkout & Payment Integration:**
+  * Integration with **Razorpay Payment Gateway API** (Test Mode).
+  * UPI Static QR Code support for direct payments.
 
----
-
-## 🚀 Step-by-Step Local Setup
-
-Follow these steps to get both the backend and frontend up and running.
-
-### Step 1: Set Up the Backend Server
-
-1. Open your terminal and navigate to the `server` directory:
-   ```bash
-   cd server
-   ```
-
-2. Install the backend dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create your `.env` configuration file. Copy the template:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Open the newly created `.env` file and verify or fill in the parameters:
-   * **`DATABASE_URL`**: Set to `"file:./dev.db"` (default for SQLite).
-   * **`JWT_SECRET`**: Set a secure secret string (e.g., `openssl rand -hex 32` output).
-   * **`PORT`**: Set to `4000` (default port).
-   * **`RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET`**: Fill in your Razorpay API credentials for testing.
-
-5. Run database migrations to create the database schema:
-   ```bash
-   npx prisma migrate dev --name init
-   ```
-
-6. Seed the SQLite database with products, categories, brands, and coupons:
-   ```bash
-   npm run prisma:seed
-   ```
-
-7. Start the Express development server:
-   ```bash
-   npm run dev
-   ```
-   *The backend API will run on **http://localhost:4000**.*
-
----
-
-### Step 2: Set Up the Frontend Client
-
-1. Open a new terminal window and navigate to the `client` directory:
-   ```bash
-   cd client
-   ```
-
-2. Install the frontend dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create the client environment file:
-   ```bash
-   cp .env.example .env
-   ```
-   *(Ensure `VITE_API_URL` points to `http://localhost:4000/api` so request proxying works seamlessly.)*
-
-4. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-   *The Vite server will start on **http://localhost:5173**.*
+* **Database Seeding & Schema:**
+  * Comprehensive Prisma schema covering `User`, `Product`, `Category`, `Brand`, `CartItem`, `Wishlist`, and `Order` entities.
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 shipshop/
-├── client/                     # Vite React Frontend App
+├── client/                     # Vite + React Frontend
 │   ├── src/
-│   │   ├── components/         # Reusable UI elements (Cart, Navbar, Footer)
-│   │   ├── context/            # Auth and Cart React contexts
+│   │   ├── components/         # Reusable UI elements (Navbar, Footer, Modals)
+│   │   ├── context/            # AuthContext & CartContext with storage persistence
+│   │   ├── services/           # client.js (API HTTP client with Bearer token header)
 │   │   ├── pages/              # Product Details, Cart, Checkout, Auth pages
-│   │   └── main.jsx            # Application entry point
-│   ├── tailwind.config.js      # Tailwind layout styles
-│   └── package.json            # Frontend script dependencies
+│   │   └── main.jsx            # React root component
+│   ├── tailwind.config.js      # Utility styling configuration
+│   └── package.json            # Client dependencies and scripts
 │
-└── server/                     # Node/Express Backend Server
+└── server/                     # Node.js + Express Backend API
     ├── prisma/
-    │   ├── dev.db              # SQLite Local Database file
-    │   ├── schema.prisma       # Prisma DB Schema definition
-    │   └── seed.js             # Seeding database entries
+    │   ├── schema.prisma       # Prisma ORM Data Models (PostgreSQL / SQLite)
+    │   └── seed.js             # Initial database seeding script
     ├── src/
-    │   ├── controllers/        # Route business logic handlers
-    │   ├── middleware/         # JWT parsing and route protection middleware
-    │   ├── routes/             # API routes definition (auth, products, order)
-    │   └── index.js            # Express server entry point
-    └── package.json            # Backend scripts and server dependencies
-```
+    │   ├── controllers/        # Business logic for auth, cart, products, orders
+    │   ├── middleware/         # Auth verification middleware (JWT verification)
+    │   ├── routes/             # Express API routes (/api/auth, /api/cart, etc.)
+    │   └── index.js            # Express application entry point
+    └── package.json            # Server dependencies and deployment scripts
