@@ -80,17 +80,20 @@ export default function Home() {
       
       {!searchQuery && <HeroBanner onShop={goShop} />}
 
-      <div id="shopgrid" className="max-w-[1240px] mx-auto px-5 pt-8.5 pb-16">
+      <div id="shopgrid" className="max-w-[1240px] mx-auto px-5 pt-4 pb-16">
         {searchQuery && (
           <h1 className="font-display text-2xl font-bold text-ink mb-6">
             Search Results for "{searchQuery}"
           </h1>
         )}
 
-        <div className="flex gap-2 mb-4.5 flex-wrap">
+        {/* --- CATEGORY PILLS BAR WITH INCREASED TOP/BOTTOM SPACING --- */}
+        <div className="flex gap-3.5 my-8 flex-wrap items-center">
           <button
             onClick={() => goShop("All")}
-            className={`px-4 py-2 rounded-full text-xs font-semibold border ${shopTab === "All" ? "bg-ink text-white border-ink" : "bg-white border-line"}`}
+            className={`px-4 py-2 rounded-full text-xs font-semibold border transition-colors ${
+              shopTab === "All" ? "bg-ink text-white border-ink" : "bg-white border-line hover:bg-gray-50"
+            }`}
           >
             All
           </button>
@@ -98,7 +101,9 @@ export default function Home() {
             <button
               key={c.id}
               onClick={() => goShop(c.slug)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold border ${shopTab === c.slug ? "bg-ink text-white border-ink" : "bg-white border-line"}`}
+              className={`px-4 py-2 rounded-full text-xs font-semibold border transition-colors ${
+                shopTab === c.slug ? "bg-ink text-white border-ink" : "bg-white border-line hover:bg-gray-50"
+              }`}
             >
               {c.name}
             </button>
@@ -108,13 +113,14 @@ export default function Home() {
         {(searchQuery || shopTab !== "All") && (
           <button
             onClick={handleBackToHome}
-            className="mt-6 mb-4 font-bold text-black text-lg block cursor-pointer hover:underline"
+            className="mt-2 mb-6 font-bold text-black text-lg block cursor-pointer hover:underline"
           >
             ← Back to Home
           </button>
         )}
 
-        <div className="grid gap-3.5 mt-6" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))" }}>
+        {/* --- PRODUCT GRID WITH SPACING --- */}
+        <div className="grid gap-6 mt-8" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))" }}>
           {filteredProducts.length === 0 ? (
             <div className="col-span-full bg-white border border-line rounded-2xl p-12 text-center shadow-sm">
               <div className="w-16 h-16 bg-canvasalt rounded-full flex items-center justify-center mx-auto mb-4 text-[#736D5E]">
