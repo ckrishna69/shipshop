@@ -10,15 +10,27 @@ export function AuthProvider({ children }) {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUser(null);
+      setReady(true);
+      return;
+    }
     api
       .get("/auth/me")
       .then(setUser)
-      .catch(() => setUser(null))
+      .catch(() => {
+        setUser(null);
+        localStorage.removeItem("token");
+      })
       .finally(() => setReady(true));
   }, []);
 
   const login = async (email, password) => {
     const data = await api.post("/auth/login", { email, password });
+    if (data?.token) {
+      localStorage.setItem("token", data.token);
+    }
     setUser(data);
     setShowAuthModal(false); // Close modal on success
     return data;
@@ -26,6 +38,9 @@ export function AuthProvider({ children }) {
 
   const signup = async (name, email, password) => {
     const data = await api.post("/auth/signup", { name, email, password });
+    if (data?.token) {
+      localStorage.setItem("token", data.token);
+    }
     setUser(data);
     setShowAuthModal(false); // Close modal on success
     return data;
@@ -35,6 +50,9 @@ export function AuthProvider({ children }) {
   
   const verifyOtp = async (phone, code) => {
     const data = await api.post("/auth/otp/verify", { phone, code });
+    if (data?.token) {
+      localStorage.setItem("token", data.token);
+    }
     setUser(data);
     setShowAuthModal(false); // Close modal on success
     return data;
@@ -45,6 +63,7 @@ export function AuthProvider({ children }) {
   
   const logout = async () => {
     await api.post("/auth/logout", {});
+    localStorage.removeItem("token");
     setUser(null);
   };
 

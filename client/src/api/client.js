@@ -1,9 +1,18 @@
 const BASE = import.meta.env.VITE_API_URL || "https://shipshop-xigq.onrender.com/api";
 
 async function request(path, options = {}) {
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    ...options.headers,
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${BASE}${path}`, {
     credentials: "include",
-    headers: { "Content-Type": "application/json", ...options.headers },
+    headers,
     ...options,
   });
   const data = await res.json().catch(() => ({}));
